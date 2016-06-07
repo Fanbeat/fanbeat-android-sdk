@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Play Now"
-        android:id="@+id/button"
+        android:id="@+id/playNowButton"
         android:layout_margin="8dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

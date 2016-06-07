@@ -1,11 +1,17 @@
 package com.fanbeat.sdk.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 
@@ -38,12 +44,17 @@ public class FanBeat {
             if (mPartnerId == null) {
                 Log.i("FanBeat SDK", FANBEAT_METADATA_KEY + " not found in the AndroidManifest");
             }
-
-            Branch.getAutoInstance(context);
-
         } catch (PackageManager.NameNotFoundException e) {
             Log.i("FanBeat SDK", "Error loading context package");
         }
+    }
+
+    public static FanBeat getInstance() {
+        if (mInstance == null) {
+            Log.e("FanBeat SDK", "FanBeat.getInstance(Context) must be called before calling this overload");
+        }
+
+        return mInstance;
     }
 
     public static FanBeat getInstance(@NonNull Context context) {
@@ -61,21 +72,52 @@ public class FanBeat {
     }
 
     public void open() {
-
+        open(null);
     }
 
-    public void open(@NonNull FanBeatListener listener) {
-        mDefferedListener = new WeakReference<FanBeatListener>(listener);
-        open();
+    public void open(@Nullable FanBeatListener listener) {
+        openForUser(null, listener);
     }
 
-    public void openForUser(@NonNull String userId) {
-
+    public void openForUser(@Nullable String userId) {
+        openForUser(userId, null);
     }
 
-    public void openForUser(@NonNull String userId, @NonNull FanBeatListener listener) {
-        mDefferedListener = new WeakReference<FanBeatListener>(listener);
-        openForUser(userId);
+    public void openForUser(@Nullable String userId, @Nullable FanBeatListener listener) {
+        if (listener != null)
+            mDefferedListener = new WeakReference<FanBeatListener>(listener);
+
+        if (mPartnerId == null) {
+            Log.i("FanBeat SDK", FANBEAT_METADATA_KEY + " not found in the AndroidManifest");
+            finalizeListener(false);
+            return;
+        }
+
+        DeepLinker deepLinker = DeepLinker.getInstance(mContext);
+
+        if (deepLinker.canOpenFanbeat()) {
+            deepLinker.openForUser(mPartnerId, userId);
+        } else {
+            mUserId = userId;
+
+            final Intent intent = new Intent(mContext, FanBeatPromoActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mContext.startActivity(intent);
+                }
+            });
+        }
+    }
+
+    private void finalizeListener(boolean didLaunch) {
+        FanBeatListener listener =
+                mDefferedListener != null ? mDefferedListener.get() : null;
+
+        if (listener != null)
+            listener.onComplete(didLaunch);
     }
 
     public interface FanBeatListener {
