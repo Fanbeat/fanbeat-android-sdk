@@ -6,21 +6,18 @@ import android.net.Uri;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
+import io.branch.referral.util.LinkProperties;
 
 /**
  * Created by tony on 6/7/16.
  */
-public class DeepLinker {
+class DeepLinker {
     private static final String BRANCH_LIVE_KEY = "key_live_oam5GSs8U81sJ8TvPo8v6bbpDudyMBQN";
     private static final String BRANCH_TEST_KEY = "key_test_mbo9SGq4LZXBQ9HvTj89lgcgzvnwJDN0";
 
@@ -72,21 +69,22 @@ public class DeepLinker {
     }
 
     private void getBranchUrl(@NonNull String partnerId, @Nullable String userId, Branch.BranchLinkCreateListener listener) {
+        // get an instance of branch with our key
         Branch branch = Branch.getInstance(mContext,
                 mIsLive ? BRANCH_LIVE_KEY : BRANCH_TEST_KEY);
 
-        JSONObject params = new JSONObject();
-        try {
-            params.put("partner_id", partnerId);
+        BranchUniversalObject branchUniversalObject = new BranchUniversalObject()
+                .setCanonicalIdentifier(partnerId)
+                .setTitle("FanBeat");
+        LinkProperties linkProperties = new LinkProperties()
+                .setChannel(partnerId)
+                .setFeature("SDK")
+                .addControlParameter("partner_id", partnerId);
 
-            if (userId != null) {
-                params.put("partner_user_id", userId);
-            }
-        } catch (JSONException ex) {
-            Log.e("FanBeat SDK", "Error creating Branch URL parameters");
-        }
+        if (userId != null)
+            linkProperties.addControlParameter("partner_user_id", userId);
 
-        branch.getShortUrl(partnerId, "SDK", null, params, listener);
+        branchUniversalObject.generateShortUrl(mContext, linkProperties, listener);
     }
 
     private void openUrl(String url) {

@@ -10,15 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.lang.ref.WeakReference;
-
-import io.branch.indexing.BranchUniversalObject;
-import io.branch.referral.Branch;
-import io.branch.referral.BranchError;
-import io.branch.referral.util.LinkProperties;
 
 /**
  * Created by tony on 6/7/16.
@@ -110,6 +102,18 @@ public class FanBeat {
                 }
             });
         }
+    }
+
+    protected void onPromoActivityResult(boolean storeOpened) {
+        if (!storeOpened) {
+            finalizeListener(false);
+            return;
+        }
+
+        DeepLinker deepLinker = DeepLinker.getInstance(mContext);
+
+        finalizeListener(true);
+        deepLinker.openForUser(mPartnerId, mUserId);
     }
 
     private void finalizeListener(boolean didLaunch) {

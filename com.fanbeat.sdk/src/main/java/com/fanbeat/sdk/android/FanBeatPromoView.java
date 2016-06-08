@@ -1,11 +1,6 @@
 package com.fanbeat.sdk.android;
 
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.ResolveInfo;
-import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +13,7 @@ import java.util.List;
 /**
  * Created by tony on 6/7/16.
  */
-public class FanBeatPromoView extends RelativeLayout {
+class FanBeatPromoView extends RelativeLayout {
     private List<WeakReference<FanBeatPromoViewListener>> mListeners = new ArrayList<>();
 
     public FanBeatPromoView(Context context) {
