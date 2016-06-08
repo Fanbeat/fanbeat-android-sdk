@@ -26,6 +26,7 @@ class DeepLinker {
     private Context mContext = null;
     private boolean mIsLive;
     private WeakReference<DeepLinkerListener> mDeferredListener;
+    private PartnerConfig mConfig;
 
     private DeepLinker(Context context) {
         mContext = context;
@@ -36,6 +37,14 @@ class DeepLinker {
             mInstance = new DeepLinker(context);
 
         return mInstance;
+    }
+
+    public PartnerConfig getConfig() {
+        return mConfig;
+    }
+
+    public void setConfig(PartnerConfig config) {
+        mConfig = config;
     }
 
     public boolean getIsLive() {

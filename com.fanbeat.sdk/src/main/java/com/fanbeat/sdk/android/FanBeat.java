@@ -35,6 +35,8 @@ public class FanBeat {
 
             if (mPartnerId == null) {
                 Log.i("FanBeat SDK", FANBEAT_METADATA_KEY + " not found in the AndroidManifest");
+            } else {
+                new PartnerConfigTask().execute(mPartnerId);
             }
         } catch (PackageManager.NameNotFoundException e) {
             Log.i("FanBeat SDK", "Error loading context package");
@@ -60,7 +62,13 @@ public class FanBeat {
         FanBeat instance = getInstance(context);
         instance.mPartnerId = partnerId;
 
+        new PartnerConfigTask().execute(partnerId);
+
         return instance;
+    }
+
+    protected void setPartnerConfig(PartnerConfig config) {
+        DeepLinker.getInstance(mContext).setConfig(config);
     }
 
     public void open() {
