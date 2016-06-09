@@ -16,12 +16,10 @@ import java.net.URL;
  * Created by tony on 6/8/16.
  */
 class PartnerConfigTask extends AsyncTask<String, Void, String> {
-    static final String BASE_URL = "https://s3.amazonaws.com/ingame-prod/partners/";
-
     @Override
     protected String doInBackground(String... params) {
-        if (params.length == 1) {
-            String dataUrl = BASE_URL + params[0] + ".json";
+        if (params.length == 2) {
+            String dataUrl = params[0] + params[1] + ".json";
 
             URL url;
             HttpURLConnection connection = null;

@@ -1,5 +1,6 @@
 package com.fanbeat.sdk.android;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -16,8 +17,6 @@ import java.lang.ref.WeakReference;
  * Created by tony on 6/7/16.
  */
 public class FanBeat {
-    private static final String FANBEAT_METADATA_KEY = "com.fanbeat.sdk.FanBeatID";
-
     private static FanBeat mInstance = null;
 
     private Context mContext;
@@ -27,16 +26,17 @@ public class FanBeat {
 
     private FanBeat(@NonNull Context context) {
         mContext = context;
+        String metaDataKey = context.getString(R.string.sdk_meta_data_key);
 
         try {
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            Object id = info.metaData.get(FANBEAT_METADATA_KEY);
+            Object id = info.metaData.get(metaDataKey);
             mPartnerId = id.toString();
 
             if (mPartnerId == null) {
-                Log.i("FanBeat SDK", FANBEAT_METADATA_KEY + " not found in the AndroidManifest");
+                Log.i("FanBeat SDK", metaDataKey + " not found in the AndroidManifest");
             } else {
-                new PartnerConfigTask().execute(mPartnerId);
+                new PartnerConfigTask().execute(mContext.getString(R.string.base_s3_url), mPartnerId);
             }
         } catch (PackageManager.NameNotFoundException e) {
             Log.i("FanBeat SDK", "Error loading context package");
@@ -62,7 +62,7 @@ public class FanBeat {
         FanBeat instance = getInstance(context);
         instance.mPartnerId = partnerId;
 
-        new PartnerConfigTask().execute(partnerId);
+        new PartnerConfigTask().execute(context.getString(R.string.base_s3_url), partnerId);
 
         return instance;
     }
@@ -88,7 +88,7 @@ public class FanBeat {
             mDefferedListener = new WeakReference<FanBeatListener>(listener);
 
         if (mPartnerId == null) {
-            Log.i("FanBeat SDK", FANBEAT_METADATA_KEY + " not found in the AndroidManifest");
+            Log.i("FanBeat SDK", mContext.getString(R.string.sdk_meta_data_key) + " not found in the AndroidManifest");
             finalizeListener(false);
             return;
         }

@@ -2,10 +2,13 @@ package com.fanbeat.sdk.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
@@ -18,9 +21,6 @@ import io.branch.referral.util.LinkProperties;
  * Created by tony on 6/7/16.
  */
 class DeepLinker {
-    private static final String BRANCH_LIVE_KEY = "key_live_oam5GSs8U81sJ8TvPo8v6bbpDudyMBQN";
-    private static final String BRANCH_TEST_KEY = "key_test_mbo9SGq4LZXBQ9HvTj89lgcgzvnwJDN0";
-
     private static DeepLinker mInstance = null;
 
     private Context mContext = null;
@@ -74,13 +74,21 @@ class DeepLinker {
     }
 
     public boolean canOpenFanbeat() {
+        try {
+            String packageId = mContext.getString(R.string.fanbeat_app_package);
+            int[] gids = mContext.getPackageManager().getPackageGids(packageId);
+            return gids != null && gids.length > 0;
+        } catch(PackageManager.NameNotFoundException e) {
+            Log.i("FanBeat SDK", "FanBeat app not installed");
+        }
+
         return false;
     }
 
     private void getBranchUrl(@NonNull String partnerId, @Nullable String userId, Branch.BranchLinkCreateListener listener) {
         // get an instance of branch with our key
         Branch branch = Branch.getInstance(mContext,
-                mIsLive ? BRANCH_LIVE_KEY : BRANCH_TEST_KEY);
+                mContext.getString(mIsLive ? R.string.branch_live_key : R.string.branch_test_key));
 
         BranchUniversalObject branchUniversalObject = new BranchUniversalObject()
                 .setCanonicalIdentifier(partnerId)
@@ -93,6 +101,13 @@ class DeepLinker {
         if (userId != null)
             linkProperties.addControlParameter("partner_user_id", userId);
 
+        if (mConfig != null) {
+            String deepLinkPath = mConfig.getDeepLinkPath();
+            if (!TextUtils.isEmpty(deepLinkPath)) {
+                linkProperties.addControlParameter("$deeplink_path", deepLinkPath);
+            }
+        }
+
         branchUniversalObject.generateShortUrl(mContext, linkProperties, listener);
     }
 
@@ -102,13 +117,13 @@ class DeepLinker {
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        finalizeListener(true);
-
         android.os.Handler handler = new android.os.Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
             public void run() {
                 mContext.startActivity(intent);
+
+                finalizeListener(true);
             }
         });
     }
