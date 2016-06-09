@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="com.fanbeat.sdk.FanBeatID" android:value="test_id"/>
+        <meta-data android:name="com.fanbeat.sdk.FanBeatID" android:value="8a07e260-2e51-11e6-8237-3b84674dd6ce"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
