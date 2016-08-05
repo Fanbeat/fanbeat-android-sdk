@@ -33,15 +33,11 @@ public class PromoPrizeFragment extends Fragment {
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
 
         resourceId = getArguments() == null ? -1 : getArguments().getInt(IMAGE_DATA_EXTRA);
-        imageView = new ImageView(getActivity());
 
-        LinearLayout layout = new LinearLayout(getActivity());
-        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        View view = layoutInflater.inflate(R.layout.fanbeat_promo_prize_fragment, container, false);
+        imageView = (ImageView)view.findViewById(R.id.promoPrizeIcon);
 
-        layout.setGravity(Gravity.CENTER);
-        layout.addView(imageView);
-
-        return layout;
+        return view;
     }
 
     @Override
