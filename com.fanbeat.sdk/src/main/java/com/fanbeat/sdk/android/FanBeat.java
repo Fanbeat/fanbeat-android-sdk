@@ -71,6 +71,10 @@ public class FanBeat {
         DeepLinker.getInstance(mContext).setConfig(config);
     }
 
+    protected PartnerConfig getPartnerConfig() {
+        return DeepLinker.getInstance(mContext).getConfig();
+    }
+
     public void open() {
         open(null);
     }

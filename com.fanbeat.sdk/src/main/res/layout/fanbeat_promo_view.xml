@@ -3,10 +3,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/promoBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:id="@+id/promoLogo"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="45dp"
+        android:layout_marginBottom="25dp"
+        android:src="@drawable/logo_ingame"/>
+
+    <TextView
+        android:id="@+id/promoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/promoLogo"
+        android:textAlignment="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="11pt"
+        android:textColor="@android:color/white"
+        android:shadowRadius="2"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:text="With FanBeat, you can compete to win awesome prizes by answering predict-the-action and trivia questions. It's fun and free to play!"/>
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/promoPrizesPager"
+        android:layout_above="@+id/pageIndicator"
+        android:layout_marginBottom="15dp" />
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/pageIndicator"
+        android:layout_above="@+id/playNowButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"/>
+
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Play Now"
+        android:layout_height="40dp"
+        android:text="GET GAME NOW!"
         android:id="@+id/playNowButton"
         android:layout_margin="8dp"
         android:layout_alignParentBottom="true"
@@ -15,6 +61,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textColor="@android:color/white"
-        android:background="#99141b"
+        android:background="@drawable/bg_promo_button"
         android:textSize="15dp" />
 </RelativeLayout>
