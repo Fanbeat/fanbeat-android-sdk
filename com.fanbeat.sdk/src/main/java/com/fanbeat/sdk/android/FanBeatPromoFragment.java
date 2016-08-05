@@ -106,6 +106,7 @@ public class FanBeatPromoFragment extends Fragment {
             if (pager != null) {
                 pager.setOffscreenPageLimit(partnerConfig.promoPrizes.size());
                 pager.setAdapter(new PrizesPagerAdapter(getActivity().getSupportFragmentManager(), knownPrizes));
+                pager.setVisibility(knownPrizes.size() > 0 ? View.VISIBLE : View.GONE);
             }
 
             if (pageIndicator != null) {
@@ -114,6 +115,8 @@ public class FanBeatPromoFragment extends Fragment {
                 pageIndicator.setFillColor(Color.WHITE);
                 pageIndicator.setStrokeColor(Color.TRANSPARENT);
                 pageIndicator.setViewPager(pager);
+
+                pageIndicator.setVisibility(knownPrizes.size() > 1 ? View.VISIBLE : View.GONE);
             }
         }
     }
