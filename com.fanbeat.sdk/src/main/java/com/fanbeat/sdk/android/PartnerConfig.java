@@ -2,6 +2,7 @@ package com.fanbeat.sdk.android;
 
 import android.text.TextUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ public class PartnerConfig {
     public String promoBackground;
     public String promoText;
     public List<PromoPrize> promoPrizes;
+    public String promoLogo;
 
     public String getDeepLinkPath() {
         if (TextUtils.isEmpty(channel)) {
@@ -26,5 +28,34 @@ public class PartnerConfig {
         } else {
             return String.format("channel/%s", channel);
         }
+    }
+
+    public static PartnerConfig getDefault()
+    {
+        PartnerConfig config = new PartnerConfig();
+
+        config.name = "Golf Channel FanBeat";
+        config.channel = "golfchannel";
+        config.team = "golf__rydercup";
+        config.promoBackground = "promo_background";
+        config.promoText = "Compete to win awesome prizes by answering predict-the-action and trivia questions. It’s fun and free to play!";
+        config.promoPrizes = new ArrayList<>();
+
+        PromoPrize golfBag = new PromoPrize();
+        golfBag.icon = "ping_bag_stand";
+
+        PromoPrize callowayWedge = new PromoPrize();
+        callowayWedge.icon = "calloway_wedge";
+
+        PromoPrize titleistBalls = new PromoPrize();
+        titleistBalls.icon = "titleist_balls";
+
+        config.promoPrizes.add(golfBag);
+        config.promoPrizes.add(callowayWedge);
+        config.promoPrizes.add(titleistBalls);
+
+        config.promoLogo = "ryder_cup";
+
+        return config;
     }
 }

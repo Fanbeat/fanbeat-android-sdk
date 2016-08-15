@@ -40,6 +40,10 @@ class DeepLinker {
     }
 
     public PartnerConfig getConfig() {
+        if (mContext == null) {
+            return PartnerConfig.getDefault();
+        }
+
         return mConfig;
     }
 

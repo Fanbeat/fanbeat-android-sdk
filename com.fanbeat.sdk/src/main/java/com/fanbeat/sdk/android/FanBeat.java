@@ -18,6 +18,7 @@ import java.lang.ref.WeakReference;
  */
 public class FanBeat {
     private static FanBeat mInstance = null;
+    private static final String METADATA_KEY_FANBEAT_ID = "com.fanbeat.sdk.FanBeatID";
 
     private Context mContext;
     private String mPartnerId;
@@ -26,15 +27,14 @@ public class FanBeat {
 
     private FanBeat(@NonNull Context context) {
         mContext = context;
-        String metaDataKey = context.getString(R.string.sdk_meta_data_key);
 
         try {
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            Object id = info.metaData.get(metaDataKey);
+            Object id = info.metaData.get(METADATA_KEY_FANBEAT_ID);
             mPartnerId = id.toString();
 
             if (mPartnerId == null) {
-                Log.i("FanBeat SDK", metaDataKey + " not found in the AndroidManifest");
+                Log.i("FanBeat SDK", METADATA_KEY_FANBEAT_ID + " not found in the AndroidManifest");
             } else {
                 new PartnerConfigTask().execute(mContext.getString(R.string.base_s3_url), mPartnerId);
             }
