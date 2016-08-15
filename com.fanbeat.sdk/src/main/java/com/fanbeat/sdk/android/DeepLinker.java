@@ -1,8 +1,11 @@
 package com.fanbeat.sdk.android;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -11,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
@@ -89,6 +93,18 @@ class DeepLinker {
         return false;
     }
 
+    private boolean canOpenPlayStore() {
+        try {
+            String packageId = "com.android.vending";
+            int[] gids = mContext.getPackageManager().getPackageGids(packageId);
+            return gids != null && gids.length > 0;
+        } catch(PackageManager.NameNotFoundException e) {
+            Log.i("FanBeat SDK", "Google Play store not installed");
+        }
+
+        return false;
+    }
+
     private void getBranchUrl(@NonNull String partnerId, @Nullable String userId, Branch.BranchLinkCreateListener listener) {
         // get an instance of branch with our key
         Branch branch = Branch.getInstance(mContext,
@@ -104,6 +120,12 @@ class DeepLinker {
 
         if (userId != null)
             linkProperties.addControlParameter("partner_user_id", userId);
+
+        // some android devices may not have the Play Store.  In that case,
+        // force the link to take the user to Play Store online
+        if (!canOpenPlayStore()) {
+            linkProperties.addControlParameter("$fallback_url", "https://play.google.com/store/apps/details?id=com.ingame");
+        }
 
         if (mConfig != null) {
             String deepLinkPath = mConfig.getDeepLinkPath();
