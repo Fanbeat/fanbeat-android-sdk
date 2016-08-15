@@ -63,7 +63,7 @@ class DeepLinker {
         openForUser(partnerId, null);
     }
 
-    public void openForUser(@NonNull String partnerId, @NonNull String userId) {
+    public void openForUser(@NonNull String partnerId, @Nullable String userId) {
         getBranchUrl(partnerId, userId, new Branch.BranchLinkCreateListener() {
             @Override
             public void onLinkCreate(String url, BranchError error) {
