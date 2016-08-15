@@ -44,14 +44,14 @@ public class PartnerConfig {
         PromoPrize golfBag = new PromoPrize();
         golfBag.icon = "ping_bag_stand";
 
-        PromoPrize callowayWedge = new PromoPrize();
-        callowayWedge.icon = "calloway_wedge";
+        PromoPrize callawayWedge = new PromoPrize();
+        callawayWedge.icon = "callaway_wedge";
 
         PromoPrize titleistBalls = new PromoPrize();
         titleistBalls.icon = "titleist_balls";
 
         config.promoPrizes.add(golfBag);
-        config.promoPrizes.add(callowayWedge);
+        config.promoPrizes.add(callawayWedge);
         config.promoPrizes.add(titleistBalls);
 
         config.promoLogo = "ryder_cup";
