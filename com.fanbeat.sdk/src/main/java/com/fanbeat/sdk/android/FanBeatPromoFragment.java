@@ -1,6 +1,7 @@
 package com.fanbeat.sdk.android;
 
 import android.graphics.Bitmap;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -96,21 +97,26 @@ public class FanBeatPromoFragment extends Fragment {
                 backgroundResourceId = R.drawable.promo_background;
             }
 
-            if (backgroundImageView != null && FanBeatPromoActivity.class.isInstance(getActivity())) {
-                ((FanBeatPromoActivity)getActivity()).loadBitmap(backgroundResourceId, backgroundImageView);
+            if (backgroundImageView != null) {
+                backgroundImageView.setImageResource(backgroundResourceId);
             }
 
             if (promoTextView != null)
                 promoTextView.setText(promoText);
 
+            if (pagerAdapter == null) {
+                pagerAdapter = new PrizesPagerAdapter(getChildFragmentManager(), knownPrizes);
+            } else {
+                pagerAdapter.setPrizes(knownPrizes);
+            }
+
             if (pager != null) {
                 pager.setOffscreenPageLimit(partnerConfig.promoPrizes.size());
-                pager.setAdapter(new PrizesPagerAdapter(getActivity().getSupportFragmentManager(), knownPrizes));
+                pager.setAdapter(new PrizesPagerAdapter(getChildFragmentManager(), knownPrizes));
                 pager.setVisibility(knownPrizes.size() > 0 ? View.VISIBLE : View.GONE);
             }
 
             if (pageIndicator != null) {
-                pageIndicator.setRadius(15);
                 pageIndicator.setPageColor(Color.argb(100, 255, 255, 255));
                 pageIndicator.setFillColor(Color.WHITE);
                 pageIndicator.setStrokeColor(Color.TRANSPARENT);
@@ -128,6 +134,11 @@ public class FanBeatPromoFragment extends Fragment {
         public PrizesPagerAdapter(FragmentManager fm, List<PromoPrize> prizes) {
             super(fm);
             this.prizes = prizes;
+        }
+
+        public void setPrizes(List<PromoPrize> prizes) {
+            this.prizes = prizes;
+            this.notifyDataSetChanged();
         }
 
         @Override

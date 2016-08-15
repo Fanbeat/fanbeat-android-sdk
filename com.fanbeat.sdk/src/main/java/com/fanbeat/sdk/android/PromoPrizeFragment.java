@@ -1,7 +1,9 @@
 package com.fanbeat.sdk.android;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,22 +32,16 @@ public class PromoPrizeFragment extends Fragment {
     public PromoPrizeFragment() {}
 
     @Override
+    @SuppressLint("ResourceType")
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
 
-        resourceId = getArguments() == null ? -1 : getArguments().getInt(IMAGE_DATA_EXTRA);
+        resourceId = getArguments() == null ? -1 : getArguments().getInt(IMAGE_DATA_EXTRA, 0);
 
         View view = layoutInflater.inflate(R.layout.fanbeat_promo_prize_fragment, container, false);
         imageView = (ImageView)view.findViewById(R.id.promoPrizeIcon);
 
+        imageView.setImageResource(resourceId);
+
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        if (FanBeatPromoActivity.class.isInstance(getActivity())) {
-            ((FanBeatPromoActivity)getActivity()).loadBitmap(resourceId, imageView, 100, 100);
-        }
     }
 }

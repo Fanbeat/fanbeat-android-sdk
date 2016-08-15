@@ -43,14 +43,4 @@ public class FanBeatPromoActivity extends FragmentActivity implements FanBeatPro
         FanBeat.getInstance().onPromoActivityResult(true);
         finish();
     }
-
-    public void loadBitmap(int resId, ImageView imageView) {
-        BitmapWorkerTask task = new BitmapWorkerTask(imageView, this);
-        task.execute(resId);
-    }
-
-    public void loadBitmap(int resId, ImageView imageView, int width, int height) {
-        BitmapWorkerTask task = new BitmapWorkerTask(imageView, this, width, height);
-        task.execute(resId);
-    }
 }
