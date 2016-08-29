@@ -30,13 +30,13 @@ public class FanBeat {
 
         try {
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            Object id = info.metaData.get(METADATA_KEY_FANBEAT_ID);
-            mPartnerId = id.toString();
+            if (info.metaData != null && info.metaData.containsKey(METADATA_KEY_FANBEAT_ID)) {
+                Object id = info.metaData.get(METADATA_KEY_FANBEAT_ID);
+                mPartnerId = id.toString();
 
-            if (mPartnerId == null) {
-                Log.i("FanBeat SDK", METADATA_KEY_FANBEAT_ID + " not found in the AndroidManifest");
-            } else {
-                new PartnerConfigTask().execute(mContext.getString(R.string.base_s3_url), mPartnerId);
+                if (mPartnerId != null) {
+                    new PartnerConfigTask().execute(mContext.getString(R.string.base_s3_url), mPartnerId);
+                }
             }
         } catch (PackageManager.NameNotFoundException e) {
             Log.i("FanBeat SDK", "Error loading context package");
