@@ -112,7 +112,8 @@ class DeepLinker {
 
         BranchUniversalObject branchUniversalObject = new BranchUniversalObject()
                 .setCanonicalIdentifier(partnerId)
-                .setTitle("FanBeat");
+                .setTitle("FanBeat")
+                .setContentType("1");
         LinkProperties linkProperties = new LinkProperties()
                 .setChannel(partnerId)
                 .setFeature("SDK")

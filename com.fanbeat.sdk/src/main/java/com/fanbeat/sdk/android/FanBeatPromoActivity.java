@@ -39,8 +39,17 @@ public class FanBeatPromoActivity extends FragmentActivity implements FanBeatPro
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!mWaitingForStore) {
+            FanBeat.getInstance().onPromoActivityResult(false);
+        }
+    }
+
+    @Override
     public void onPlayNow() {
-        FanBeat.getInstance().onPromoActivityResult(true);
-        finish();
+        mWaitingForStore = true;
+        FanBeat.getInstance().onPlayNowClicked();
     }
 }

@@ -28,6 +28,9 @@ public class FanBeat {
     private FanBeat(@NonNull Context context) {
         mContext = context;
 
+        DeepLinker.getInstance(context).setIsLive(false);
+        FanBeatAnalytics.getInstance(context).setIsLive(false);
+
         try {
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
             if (info.metaData != null && info.metaData.containsKey(METADATA_KEY_FANBEAT_ID)) {
@@ -35,7 +38,7 @@ public class FanBeat {
                 mPartnerId = id.toString();
 
                 if (mPartnerId != null) {
-                    new PartnerConfigTask().execute(mContext.getString(R.string.base_s3_url), mPartnerId);
+                    new PartnerConfigTask().execute(mContext.getString(DeepLinker.getInstance(mContext).getIsLive() ? R.string.base_s3_url : R.string.base_dev_s3_url), mPartnerId);
                 }
             }
         } catch (PackageManager.NameNotFoundException e) {
@@ -113,7 +116,13 @@ public class FanBeat {
                     mContext.startActivity(intent);
                 }
             });
+
+            FanBeatAnalytics.getInstance().didViewPromoScreen(mPartnerId);
         }
+    }
+
+    protected void onPlayNowClicked() {
+        DeepLinker.getInstance(mContext).openForUser(mPartnerId, mUserId);
     }
 
     protected void onPromoActivityResult(boolean storeOpened) {
@@ -124,8 +133,13 @@ public class FanBeat {
 
         DeepLinker deepLinker = DeepLinker.getInstance(mContext);
 
-        finalizeListener(true);
-        deepLinker.openForUser(mPartnerId, mUserId);
+        if (deepLinker.getInstance(mContext).canOpenFanbeat()) {
+            FanBeatAnalytics.getInstance().didInstallFanBeat(mPartnerId);
+            deepLinker.openForUser(mPartnerId, mUserId);
+            finalizeListener(true);
+        } else {
+            finalizeListener(false);
+        }
     }
 
     private void finalizeListener(boolean didLaunch) {
