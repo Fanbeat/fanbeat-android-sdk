@@ -8,4 +8,7 @@
     <string name="base_analytics_url">https://api.ingamemobile.com/</string>
     <string name="branch_live_key">key_live_oam5GSs8U81sJ8TvPo8v6bbpDudyMBQN</string>
     <string name="branch_test_key">key_test_mbo9SGq4LZXBQ9HvTj89lgcgzvnwJDN0</string>
+    <string name="golf_compete_text">COMPETE TO WIN AWESOME PRIZES BY ANSWERING PREDICT-THE-ACTION AND TRIVIA QUESTIONS.</string>
+    <string name="golf_its_fun_text">IT\'S FUN AND FREE TO PLAY!</string>
+    <string name="golf_button_text">GET THE GAME</string>
 </resources>

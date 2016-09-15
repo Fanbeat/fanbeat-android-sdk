@@ -58,4 +58,8 @@ public class PartnerConfig {
 
         return config;
     }
+
+    public boolean isGolfChannel() {
+        return channel != null && channel.equals("golfchannel");
+    }
 }

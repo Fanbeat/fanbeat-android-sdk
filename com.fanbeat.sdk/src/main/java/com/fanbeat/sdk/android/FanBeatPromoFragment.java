@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class FanBeatPromoFragment extends Fragment {
 
-    private List<WeakReference<FanBeatPromoViewListener>> mListeners = new ArrayList<>();
+    protected List<WeakReference<FanBeatPromoViewListener>> mListeners = new ArrayList<>();
 
     private ImageView backgroundImageView;
     private TextView promoTextView;
