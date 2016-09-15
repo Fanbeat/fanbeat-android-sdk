@@ -12,6 +12,13 @@ public class FanBeatAnalytics {
 
     private static final String VIEW_PROMO_EVENT = "activation";
     private static final String INSTALLED_EVENT = "installed";
+    private static final String REOPENED_EVENT = "reopened";
+
+    private enum AnalyticsEvent {
+        ViewedPromoScreen,
+        InstalledFanBeatApp,
+        ReopenedFanBeatApp
+    }
 
     private static FanBeatAnalytics mInstance = null;
     private Context mContext;
@@ -41,20 +48,36 @@ public class FanBeatAnalytics {
     public void setIsLive(boolean isLive) { this.mIsLive = isLive; }
 
     public void didViewPromoScreen(String partnerId) {
+        logEvent(partnerId, AnalyticsEvent.ViewedPromoScreen);
+    }
+
+    public void didInstallFanBeat(String partnerId) {
+        logEvent(partnerId, AnalyticsEvent.InstalledFanBeatApp);
+    }
+
+    public void didReopenFanBeat(String partnerId) {
+        logEvent(partnerId, AnalyticsEvent.ReopenedFanBeatApp);
+    }
+
+    private void logEvent(String partnerId, AnalyticsEvent event) {
         String url = String.format("%ssdk/%s/%s",
                 mContext.getString(mIsLive ? R.string.base_analytics_url : R.string.base_dev_analytics_url),
                 partnerId,
-                VIEW_PROMO_EVENT);
+                analyticsEventToString(event));
 
         new FanBeatAnalyticsTask().execute(url);
     }
 
-    public void didInstallFanBeat(String partnerId) {
-        String url = String.format("%ssdk/%s/%s",
-                mContext.getString(mIsLive ? R.string.base_analytics_url : R.string.base_dev_analytics_url),
-                partnerId,
-                INSTALLED_EVENT);
-
-        new FanBeatAnalyticsTask().execute(url);
+    private String analyticsEventToString(AnalyticsEvent event) {
+        switch(event) {
+            case ViewedPromoScreen:
+                return VIEW_PROMO_EVENT;
+            case InstalledFanBeatApp:
+                return INSTALLED_EVENT;
+            case ReopenedFanBeatApp:
+                return REOPENED_EVENT;
+            default:
+                return "";
+        }
     }
 }

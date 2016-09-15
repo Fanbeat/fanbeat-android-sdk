@@ -104,6 +104,8 @@ public class FanBeat {
 
         if (deepLinker.canOpenFanbeat()) {
             deepLinker.openForUser(mPartnerId, userId);
+
+            FanBeatAnalytics.getInstance().didReopenFanBeat(mPartnerId);
         } else {
             mUserId = userId;
 
