@@ -7,115 +7,125 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/golf_promo"
+        android:src="@drawable/golf_background"
         android:scaleType="centerCrop"/>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
+        <!-- Left spacer -->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-            <Button
-                android:id="@+id/golfGetGame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="25sp"
-                android:text="@string/golf_button_text"
-                android:textSize="18sp"
-                android:background="#0f3d81"
-                android:textColor="@android:color/white"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"/>
+        </LinearLayout>
+
+
+        <!-- Content -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:orientation="vertical">
+
+            <!-- Top spacer -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+
+            <!-- Logos -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ryder_cup"
+                    android:scaleType="fitCenter" />
+
+            </LinearLayout>
+
+            <!-- Text -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/golfCompeteLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:text="@string/golf_compete_text"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:shadowColor="@android:color/black"
+                    android:shadowDy="5"
+                    android:shadowDx="5"
+                    android:shadowRadius="5"/>
+
+                <TextView
+                    android:id="@+id/golfItsFunLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6sp"
+                    android:textSize="22sp"
+                    android:text="@string/golf_its_fun_text"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:shadowColor="@android:color/black"
+                    android:shadowDy="5"
+                    android:shadowDx="5"
+                    android:shadowRadius="5" />
+            </LinearLayout>
+
+            <!-- Button -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/golfGetGame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/golf_button_text"
+                    android:textSize="18sp"
+                    android:background="#0f3d81"
+                    android:textColor="@android:color/white"
+                    android:paddingLeft="20sp"
+                    android:paddingRight="20sp"/>
+
+            </LinearLayout>
+
+            <!-- Bottom spacer -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Right spacer -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
         </LinearLayout>
 
     </LinearLayout>
-
-    <!--
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:gravity="bottom|center_horizontal"
-            android:layout_weight="4">
-
-            <ImageView
-                android:id="@+id/golf_ryder_cup"
-                android:layout_width="wrap_content"
-                android:layout_height="140dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ryder_cup_logo" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="3">
-            <ImageView
-                android:id="@+id/golf_trivia_badge"
-                android:layout_width="wrap_content"
-                android:layout_height="120dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/golf_trivia_badge"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="4">
-            <TextView
-                android:id="@+id/golf_compete_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="@string/golf_compete_text"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="14dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/golf_its_fun_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="@string/golf_its_fun_text"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/golf_button_text"
-                android:textSize="18dp"
-                android:background="#0f3d81"
-                android:textColor="@android:color/white"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"/>
-        </LinearLayout>
-    </LinearLayout>-->
 
 </FrameLayout>
