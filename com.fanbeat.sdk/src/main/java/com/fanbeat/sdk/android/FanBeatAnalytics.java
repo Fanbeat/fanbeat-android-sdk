@@ -52,7 +52,11 @@ public class FanBeatAnalytics {
     }
 
     public void didInstallFanBeat(String partnerId) {
-        logEvent(partnerId, AnalyticsEvent.InstalledFanBeatApp);
+        /*
+         * Disabling, no guarantee that the user comes back to the SDK from the store.
+         * Get this stat from branch instead to see how many android users install.
+         */
+        //logEvent(partnerId, AnalyticsEvent.InstalledFanBeatApp);
     }
 
     public void didReopenFanBeat(String partnerId) {
