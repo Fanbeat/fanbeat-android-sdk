@@ -28,8 +28,8 @@ public class FanBeat {
     private FanBeat(@NonNull Context context) {
         mContext = context;
 
-        DeepLinker.getInstance(context).setIsLive(false);
-        FanBeatAnalytics.getInstance(context).setIsLive(false);
+        DeepLinker.getInstance(context).setIsLive(true);
+        FanBeatAnalytics.getInstance(context).setIsLive(true);
 
         try {
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
